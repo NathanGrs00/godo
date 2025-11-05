@@ -14,3 +14,6 @@ vendor/
 # IDE
 .idea/
 *.log
+
+# .env files
+.env
