@@ -1,0 +1,16 @@
+# Go binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Vendor folder (optional)
+vendor/
+
+# IDE
+.idea/
+*.log
