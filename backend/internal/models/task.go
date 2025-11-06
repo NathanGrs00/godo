@@ -8,7 +8,7 @@ type Task struct {
 	Description string               `json:"description"`
 	Priority    string               `json:"priority"`
 	Completed   bool                 `json:"completed"`
-	UserId      primitive.ObjectID   `json:"userId"`
-	DeadlineIDs []primitive.ObjectID `json:"deadlineIds"`
-	TagIDs      []primitive.ObjectID `json:"tagIds"`
+	UserId      primitive.ObjectID   `json:"user_id"`
+	DeadlineIDs []primitive.ObjectID `json:"deadline_ids"`
+	TagIDs      []primitive.ObjectID `json:"tag_ids"`
 }

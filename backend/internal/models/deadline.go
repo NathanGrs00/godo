@@ -7,12 +7,12 @@ import (
 )
 
 type Deadline struct {
-	ID          primitive.ObjectID
-	Title       string
-	Description string
-	Date        time.Time
-	Passed      bool
-	UserId      primitive.ObjectID
-	TaskIDs     []primitive.ObjectID
-	TagIDs      []primitive.ObjectID
+	ID          primitive.ObjectID   `json:"id"`
+	Title       string               `json:"title"`
+	Description string               `json:"description"`
+	Date        time.Time            `json:"date"`
+	Passed      bool                 `json:"passed"`
+	UserId      primitive.ObjectID   `json:"user_id"`
+	TaskIDs     []primitive.ObjectID `json:"task_ids"`
+	TagIDs      []primitive.ObjectID `json:"tag_ids"`
 }

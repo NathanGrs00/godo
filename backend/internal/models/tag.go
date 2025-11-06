@@ -3,8 +3,8 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Tag struct {
-	ID     primitive.ObjectID
-	Name   string
-	Color  string
-	UserId primitive.ObjectID
+	ID     primitive.ObjectID `json:"id"`
+	Name   string             `json:"name"`
+	Color  string             `json:"color"`
+	UserId primitive.ObjectID `json:"user_id"`
 }
