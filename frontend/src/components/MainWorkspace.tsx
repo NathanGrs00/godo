@@ -11,6 +11,7 @@ const MainWorkspace: React.FC<MainWorkspaceProps> = () => {
         <main className="main-workspace">
             <TitleHeader title={"Tasks"} icon={<TaskIcon/>} />
             <hr className="title-header-line"/>
+            /* List of tasks will go here */
         </main>
     );
 }
