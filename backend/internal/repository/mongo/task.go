@@ -95,3 +95,33 @@ func (r *taskRepo) Delete(ctx context.Context, taskID primitive.ObjectID) error 
 	// Return the error if any
 	return err
 }
+
+// GetAll to get all tasks
+func (r *taskRepo) GetAll(ctx context.Context) ([]*models.Task, error) {
+	// Make a slice to hold tasks
+	var tasks []*models.Task
+	// Find all tasks in the collection
+	cursor, err := r.collection.Find(ctx, bson.D{})
+
+	// Check for errors during the find operation
+	if err != nil {
+		// Return nil and the error if any
+		return nil, err
+	}
+	// Ensure the cursor is closed after processing
+	defer cursor.Close(ctx)
+	// Iterate through the cursor to decode each task
+	for cursor.Next(ctx) {
+		// Decode the current document into a Task struct
+		var task models.Task
+		// Check for errors during decoding
+		if err := cursor.Decode(&task); err != nil {
+			// Return nil and the error if any
+			return nil, err
+		}
+		// Append the decoded task to the tasks slice
+		tasks = append(tasks, &task)
+	}
+	// Return the slice of tasks and nil for error
+	return tasks, nil
+}

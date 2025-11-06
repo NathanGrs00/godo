@@ -94,3 +94,32 @@ func (r *tagRepo) Delete(ctx context.Context, tagID primitive.ObjectID) error {
 	// Return the error if any
 	return err
 }
+
+func (r *tagRepo) GetAll(ctx context.Context) ([]*models.Tag, error) {
+	// tags will hold the list of all tags
+	var tags []*models.Tag
+
+	// Find all documents in the collection
+	cursor, err := r.collection.Find(ctx, bson.M{})
+	// If error occurs during Find, return it
+	if err != nil {
+		// return empty slice and the error
+		return nil, err
+	}
+	// Ensure the cursor is closed after processing
+	defer cursor.Close(ctx)
+
+	// Iterate through the cursor
+	for cursor.Next(ctx) {
+		// Decode each document into a Tag struct
+		var tag models.Tag
+		// If error occurs during decoding, return it
+		if err := cursor.Decode(&tag); err != nil {
+			return nil, err
+		}
+		// Append the tag to the tags slice
+		tags = append(tags, &tag)
+	}
+	// Return the list of tags
+	return tags, nil
+}

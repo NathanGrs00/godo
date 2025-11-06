@@ -94,3 +94,36 @@ func (r *deadlineRepo) Delete(ctx context.Context, deadlineID primitive.ObjectID
 	// Return the error if any
 	return err
 }
+
+// GetAll retrieves all deadlines from the MongoDB collection.
+func (r *deadlineRepo) GetAll(ctx context.Context) ([]*models.Deadline, error) {
+	// deadlines will hold the list of all deadlines
+	var deadlines []*models.Deadline
+
+	// Find all documents in the collection
+	cursor, err := r.collection.Find(ctx, bson.M{})
+	// If error occurs during Find, return it
+	if err != nil {
+		// Return nil and the error
+		return nil, err
+	}
+
+	// Ensure the cursor is closed after processing
+	defer cursor.Close(ctx)
+
+	// Iterate through the cursor
+	for cursor.Next(ctx) {
+		// Decode each document into a Deadline struct
+		var deadline models.Deadline
+		// If error occurs during decoding, return it
+		if err := cursor.Decode(&deadline); err != nil {
+			// Return nil and the error
+			return nil, err
+		}
+		// Append the deadline to the deadlines slice
+		deadlines = append(deadlines, &deadline)
+	}
+
+	// Return the list of all deadlines
+	return deadlines, nil
+}
