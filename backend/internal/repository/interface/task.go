@@ -20,4 +20,6 @@ type TaskRepository interface {
 	Update(ctx context.Context, task *models.Task) error
 	// Delete removes a task by its ID
 	Delete(ctx context.Context, id primitive.ObjectID) error
+	// GetAll retrieves all tasks
+	GetAll(ctx context.Context) ([]*models.Task, error)
 }

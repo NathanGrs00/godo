@@ -20,4 +20,6 @@ type TagRepository interface {
 	Update(ctx context.Context, tag *models.Tag) error
 	// Delete removes a tag by its ID
 	Delete(ctx context.Context, id primitive.ObjectID) error
+	// GetAll retrieves all tags
+	GetAll(ctx context.Context) ([]*models.Tag, error)
 }

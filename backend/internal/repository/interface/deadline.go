@@ -20,4 +20,6 @@ type DeadlineRepository interface {
 	Update(ctx context.Context, deadline *models.Deadline) error
 	// Delete removes a deadline by its ID
 	Delete(ctx context.Context, id primitive.ObjectID) error
+	// GetAll retrieves all deadlines
+	GetAll(ctx context.Context) ([]*models.Deadline, error)
 }
