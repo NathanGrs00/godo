@@ -6,7 +6,7 @@ import SearchIcon from "./assets/icons/NavBar/SearchIcon.tsx";
 import SettingsIcon from "./assets/icons/NavBar/SettingsIcon.tsx";
 import DeadlineIcon from "./assets/icons/NavBar/DeadlineIcon.tsx";
 import TaskIcon from "./assets/icons/NavBar/TaskIcon.tsx";
-import MainWorkspace from "./components/MainWorkspace.tsx";
+import MainWorkspace from "./components/MiddleSection/MainWorkspace.tsx";
 
 function App() {
     return (

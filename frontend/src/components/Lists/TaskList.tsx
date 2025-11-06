@@ -1,5 +1,6 @@
 import React from "react";
-import type {Task} from "../hooks/useTasks";
+import type {Task} from "../../hooks/useTasks.ts";
+import "../../styles/Lists/TaskList.css";
 
 interface TaskListProps {
     tasks: Task[];

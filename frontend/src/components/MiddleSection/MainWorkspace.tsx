@@ -1,9 +1,9 @@
 import React from "react";
 import TitleHeader from "./TitleHeader.tsx";
-import TaskIcon from "../assets/icons/NavBar/TaskIcon.tsx";
-import "../styles/MainWorkspace.css";
-import {useTasks} from "../hooks/useTasks.ts";
-import TaskList from "./TaskList.tsx";
+import TaskIcon from "../../assets/icons/NavBar/TaskIcon.tsx";
+import "../../styles/MainWorkspace.css";
+import {useTasks} from "../../hooks/useTasks.ts";
+import TaskList from "../Lists/TaskList.tsx";
 
 interface MainWorkspaceProps {
 }
