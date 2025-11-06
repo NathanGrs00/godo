@@ -11,7 +11,7 @@ interface SideNavBarProps {
 
 const SideNavBar: React.FC<SideNavBarProps> = ({
     links,
-    width = '10%',
+    width = 'clamp(75px, 7%, 200px)',
     bgColor = '#232830',
     className = '',
     children
