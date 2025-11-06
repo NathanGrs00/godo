@@ -13,6 +13,6 @@
     width: 60%;
     height: 3px;
     border: none;
-    background: linear-gradient(90deg, #8CFBDE, #7D82B8, transparent);
+    background: linear-gradient(90deg, var(--ac-aqua), var(--pr-violet), transparent);
     border-radius: 2px;
 }

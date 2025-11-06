@@ -7,7 +7,7 @@
 
 .title-header-text {
     margin-left: 10px;
-    color: #f2f7f2
+    color: var(--tx-mint);
 }
 
 .title-header-icon svg {

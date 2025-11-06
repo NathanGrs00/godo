@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #232830;
+    background-color: var(--nb-gunmetal);
     width: clamp(75px, 7%, 200px);
 }
 
@@ -18,9 +18,4 @@
 .side-nav-bar-item:last-child {
     margin-top: auto;
     margin-bottom: 20px;
-}
-
-a {
-    text-decoration: none;
-    color: #ecf0f1;
 }

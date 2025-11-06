@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
 
+:root {
+    --bg-dark-blue: #14161B;
+    --nb-gunmetal: #232830;
+    --ac-aqua: #8CFBDE;
+    --pr-violet: #7D82B8;
+    --tx-mint: #F2F7F2;
+}
+
 html, body {
     margin: 0;
     padding: 0;
