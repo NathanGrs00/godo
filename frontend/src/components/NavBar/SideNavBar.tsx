@@ -1,8 +1,7 @@
 import React, {type ReactNode} from "react";
-import '../styles/SideNavBar.css';
+import '../../styles/NavBar/SideNavBar.css';
 
 interface SideNavBarProps {
-    links: { label: string; href: string }[];
     width?: string;
     bgColor?: string;
     className?: string;
@@ -10,7 +9,6 @@ interface SideNavBarProps {
 }
 
 const SideNavBar: React.FC<SideNavBarProps> = ({
-    links,
     width = 'clamp(75px, 7%, 200px)',
     bgColor = '#232830',
     className = '',
@@ -21,15 +19,6 @@ const SideNavBar: React.FC<SideNavBarProps> = ({
             className={`side-nav-bar ${className}`}
             style={{ width: width, backgroundColor: bgColor }}
         >
-            <ul>
-                {links.map((link, index) => (
-                    <li key={index}>
-                        <a href={link.href}>
-                            {link.label}
-                        </a>
-                    </li>
-                ))}
-            </ul>
             {children}
         </nav>
     );

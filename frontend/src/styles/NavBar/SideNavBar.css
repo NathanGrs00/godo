@@ -9,6 +9,10 @@
     height: 100vh;
 }
 
+.side-nav-bar-item:first-child{
+    margin-top: 20px;
+}
+
 .side-nav-bar-item:last-child {
     margin-top: auto;
     margin-bottom: 20px;

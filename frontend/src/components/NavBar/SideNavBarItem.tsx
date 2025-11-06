@@ -1,5 +1,5 @@
 import React, {type ReactNode} from "react";
-import '../styles/SideNavBarItem.css';
+import '../../styles/NavBar/SideNavBarItem.css';
 
 interface SideNavBarItemProps {
     icon: ReactNode
