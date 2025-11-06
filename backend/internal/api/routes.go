@@ -36,6 +36,8 @@ func SetupRoutes(r *gin.Engine) {
 		tasks.POST("/", taskHandlers.Create)
 		tasks.PUT("/:id", taskHandlers.Update)
 		tasks.DELETE("/:id", taskHandlers.Delete)
+
+		tasks.GET("/dummies", taskHandlers.DummyTasks)
 	}
 
 	deadlines := r.Group("/deadlines")

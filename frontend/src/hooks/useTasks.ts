@@ -8,7 +8,7 @@ export interface Task {
     completed: boolean;
 }
 
-export function useTasks = () => {
+export const useTasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
