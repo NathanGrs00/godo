@@ -7,6 +7,8 @@
     top: 0;
     left: 0;
     height: 100vh;
+    background-color: #232830;
+    width: clamp(75px, 7%, 200px);
 }
 
 .side-nav-bar-item:first-child{

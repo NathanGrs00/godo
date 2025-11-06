@@ -1,0 +1,19 @@
+.title-header {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: calc(100% - clamp(75px, 7%, 200px));
+    margin-left: clamp(75px, 7%, 200px);
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.title-header-text {
+    margin-left: 20px;
+    color: #f2f7f2
+}
+
+.title-header-icon svg {
+    width: 40px;
+    height: 40px;
+}
