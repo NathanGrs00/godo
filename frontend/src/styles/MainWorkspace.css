@@ -1,0 +1,18 @@
+.main-workspace {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: calc(100% - clamp(75px, 7%, 200px));
+    margin-left: clamp(75px, 7%, 200px);
+    padding: 20px 30px 20px 30px;
+    box-sizing: border-box;
+}
+
+.title-header-line {
+    margin: 0;
+    width: 60%;
+    height: 3px;
+    border: none;
+    background: linear-gradient(90deg, #8CFBDE, #7D82B8, transparent);
+    border-radius: 2px;
+}

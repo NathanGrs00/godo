@@ -6,7 +6,7 @@ import SearchIcon from "./assets/icons/NavBar/SearchIcon.tsx";
 import SettingsIcon from "./assets/icons/NavBar/SettingsIcon.tsx";
 import DeadlineIcon from "./assets/icons/NavBar/DeadlineIcon.tsx";
 import TaskIcon from "./assets/icons/NavBar/TaskIcon.tsx";
-import TitleHeader from "./components/TitleHeader.tsx";
+import MainWorkspace from "./components/MainWorkspace.tsx";
 
 function App() {
     return (
@@ -18,7 +18,7 @@ function App() {
                 <SideNavBarItem icon={<TaskIcon/>} />
                 <SideNavBarItem icon={<SettingsIcon/>} />
             </SideNavBar>
-            <TitleHeader title={"Tasks"} icon={<TaskIcon/>} />
+            <MainWorkspace/>
         </>
     )
 }

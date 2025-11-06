@@ -1,15 +1,12 @@
 .title-header {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    height: 100px;
-    width: calc(100% - clamp(75px, 7%, 200px));
-    margin-left: clamp(75px, 7%, 200px);
-    padding-left: 20px;
-    box-sizing: border-box;
+    width: 100%;
 }
 
 .title-header-text {
-    margin-left: 20px;
+    margin-left: 10px;
     color: #f2f7f2
 }
 
