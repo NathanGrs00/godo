@@ -12,7 +12,7 @@ func SetupRoutes(r *gin.Engine) {
 	settingsHandler := handlers.NewSettingsHandler()
 	authHandlers := handlers.NewAuthHandler()
 
-	r.GET("/", rootHandler)
+	r.GET("/", handlers.RootHandler)
 
 	auth := r.Group("/auth")
 	{
@@ -47,6 +47,7 @@ func SetupRoutes(r *gin.Engine) {
 		deadlines.DELETE("/:id", deadlinesHandler.Delete)
 	}
 
+	//TODO: Settings need different handlers instead of CRUD operations.
 	settings := r.Group("/settings")
 	{
 		settings.GET("/", settingsHandler.GetAll)
