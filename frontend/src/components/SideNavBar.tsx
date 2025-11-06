@@ -1,4 +1,4 @@
-import React from "react";
+import React, {type ReactNode} from "react";
 import '../styles/SideNavBar.css';
 
 interface SideNavBarProps {
@@ -6,13 +6,15 @@ interface SideNavBarProps {
     width?: string;
     bgColor?: string;
     className?: string;
+    children?: ReactNode;
 }
 
 const SideNavBar: React.FC<SideNavBarProps> = ({
     links,
-    width = '25%',
+    width = '10%',
     bgColor = '#232830',
     className = '',
+    children
 }) => {
     return (
         <nav
@@ -28,6 +30,7 @@ const SideNavBar: React.FC<SideNavBarProps> = ({
                     </li>
                 ))}
             </ul>
+            {children}
         </nav>
     );
 }
