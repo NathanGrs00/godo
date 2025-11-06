@@ -5,6 +5,7 @@ import (
 
 	"github.com/NathanGrs00/godo/internal/models"
 	_interface "github.com/NathanGrs00/godo/internal/repository/interface"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,9 +18,7 @@ type taskRepo struct {
 
 // NewTaskRepository creates a new instance of TaskRepository using the provided MongoDB database.
 func NewTaskRepository(db *mongo.Database) _interface.TaskRepository {
-	return &taskRepo{
-		collection: db.Collection("tasks")
-	}
+	return &taskRepo{collection: db.Collection("tasks")}
 }
 
 // Create adds a new task to the MongoDB collection.
@@ -73,4 +72,26 @@ func (r *taskRepo) GetByUserID(ctx context.Context, userID primitive.ObjectID) (
 
 	// Return the list of tasks
 	return tasks, nil
+}
+
+// Update modifies an existing task in the MongoDB collection.
+func (r *taskRepo) Update(ctx context.Context, task *models.Task) error {
+	// Filter to find the task by its ID
+	filter := primitive.M{"_id": task.ID}
+	// Update the task document with the new values
+	update := bson.D{{"$set", task}}
+	// Perform the update operation
+	_, err := r.collection.UpdateOne(ctx, filter, update)
+	// Return the error if any
+	return err
+}
+
+// Delete removes an existing task in the MongoDB collection.
+func (r *taskRepo) Delete(ctx context.Context, taskID primitive.ObjectID) error {
+	// Filter to find the task by ID
+	filter := primitive.M{"_id": taskID}
+	// Perform the update operation
+	_, err := r.collection.DeleteOne(ctx, filter)
+	// Return the error if any
+	return err
 }
