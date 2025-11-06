@@ -33,7 +33,7 @@ func (r *taskRepo) GetByID(ctx context.Context, id primitive.ObjectID) (*models.
 	// task will hold the result of the query
 	var task models.Task
 	// Filter to find the task by its ID
-	filter := primitive.M{"_id": id}
+	filter := bson.M{"_id": id}
 	// Perform the query and decode the result into the task variable
 	err := r.collection.FindOne(ctx, filter).Decode(&task)
 	// Return nil for the task and the error if there was an issue
@@ -47,7 +47,7 @@ func (r *taskRepo) GetByID(ctx context.Context, id primitive.ObjectID) (*models.
 // GetByUserID retrieves all tasks for a specific user from the MongoDB collection.
 func (r *taskRepo) GetByUserID(ctx context.Context, userID primitive.ObjectID) ([]*models.Task, error) {
 	// Filter to find tasks by user ID
-	filter := primitive.M{"user_id": userID}
+	filter := bson.M{"user_id": userID}
 
 	cursor, err := r.collection.Find(ctx, filter)
 	if err != nil {
@@ -77,7 +77,7 @@ func (r *taskRepo) GetByUserID(ctx context.Context, userID primitive.ObjectID) (
 // Update modifies an existing task in the MongoDB collection.
 func (r *taskRepo) Update(ctx context.Context, task *models.Task) error {
 	// Filter to find the task by its ID
-	filter := primitive.M{"_id": task.ID}
+	filter := bson.M{"_id": task.ID}
 	// Update the task document with the new values
 	update := bson.D{{"$set", task}}
 	// Perform the update operation
@@ -89,7 +89,7 @@ func (r *taskRepo) Update(ctx context.Context, task *models.Task) error {
 // Delete removes an existing task in the MongoDB collection.
 func (r *taskRepo) Delete(ctx context.Context, taskID primitive.ObjectID) error {
 	// Filter to find the task by ID
-	filter := primitive.M{"_id": taskID}
+	filter := bson.M{"_id": taskID}
 	// Perform the update operation
 	_, err := r.collection.DeleteOne(ctx, filter)
 	// Return the error if any
