@@ -11,8 +11,8 @@ import (
 type UserRepository interface {
 	// Create adds a new user to the database
 	Create(ctx context.Context, user *models.User) error
-	// GetByID retrieves a user by its ID
-	GetByID(ctx context.Context, id primitive.ObjectID) (*models.User, error)
+	// GetById retrieves a user by its ID
+	GetById(ctx context.Context, id primitive.ObjectID) (*models.User, error)
 	// GetByEmail retrieves a user by its email
 	GetByEmail(ctx context.Context, email string) (*models.User, error)
 	// Update modifies an existing user

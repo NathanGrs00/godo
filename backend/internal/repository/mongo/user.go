@@ -27,8 +27,8 @@ func (r *userRepo) Create(ctx context.Context, user *models.User) error {
 	return err
 }
 
-// GetByID retrieves a user by its ID from the MongoDB collection.
-func (r *userRepo) GetByID(ctx context.Context, id primitive.ObjectID) (*models.User, error) {
+// GetById retrieves a user by its ID from the MongoDB collection.
+func (r *userRepo) GetById(ctx context.Context, id primitive.ObjectID) (*models.User, error) {
 	// user will hold the result of the query
 	var user models.User
 	// Filter to find the user by its ID

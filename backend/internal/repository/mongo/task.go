@@ -28,8 +28,8 @@ func (r *taskRepo) Create(ctx context.Context, task *models.Task) error {
 	return err
 }
 
-// GetByID retrieves a task by its ID from the MongoDB collection.
-func (r *taskRepo) GetByID(ctx context.Context, id primitive.ObjectID) (*models.Task, error) {
+// GetById retrieves a task by its ID from the MongoDB collection.
+func (r *taskRepo) GetById(ctx context.Context, id primitive.ObjectID) (*models.Task, error) {
 	// task will hold the result of the query
 	var task models.Task
 	// Filter to find the task by its ID
@@ -44,8 +44,8 @@ func (r *taskRepo) GetByID(ctx context.Context, id primitive.ObjectID) (*models.
 	return &task, nil
 }
 
-// GetByUserID retrieves all tasks for a specific user from the MongoDB collection.
-func (r *taskRepo) GetByUserID(ctx context.Context, userID primitive.ObjectID) ([]*models.Task, error) {
+// GetByUserId retrieves all tasks for a specific user from the MongoDB collection.
+func (r *taskRepo) GetByUserId(ctx context.Context, userID primitive.ObjectID) ([]*models.Task, error) {
 	// Filter to find tasks by user ID
 	filter := bson.M{"user_id": userID}
 
