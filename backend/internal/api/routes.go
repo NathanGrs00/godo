@@ -9,6 +9,7 @@ func SetupRoutes(r *gin.Engine) {
 	userHandlers := handlers.NewUserHandler()
 	taskHandlers := handlers.NewTaskHandler()
 	deadlinesHandler := handlers.NewDeadlineHandler()
+	tagHandlers := handlers.NewTagHandler()
 	settingsHandler := handlers.NewSettingsHandler()
 	authHandlers := handlers.NewAuthHandler()
 
@@ -48,6 +49,16 @@ func SetupRoutes(r *gin.Engine) {
 		deadlines.PUT("/:id", deadlinesHandler.Update)
 		deadlines.DELETE("/:id", deadlinesHandler.Delete)
 		deadlines.GET("/dummies", deadlinesHandler.DummyDeadlines)
+	}
+
+	tags := r.Group("/tags")
+	{
+		tags.GET("/", tagHandlers.GetAll)
+		tags.GET("/:id", tagHandlers.GetByID)
+		tags.POST("/", tagHandlers.Create)
+		tags.PUT("/:id", tagHandlers.Update)
+		tags.DELETE("/:id", tagHandlers.Delete)
+		tags.GET("/dummies", tagHandlers.DummyTags)
 	}
 
 	//TODO: Settings need different handlers instead of CRUD operations.

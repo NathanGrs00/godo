@@ -1,4 +1,5 @@
 import React from "react";
+import TagSelect from "./TagSelect.tsx";
 import "../../../styles/MiddleSection/MutateTask/MutateTaskForm.css"
 
 interface MutateTaskFormProps {
@@ -15,6 +16,9 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({
     priority = '',
     onClose
 } ) => {
+
+    const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+
     return (
         <form className="mutate-task-form" onSubmit={(e) => e.preventDefault()}>
             <input type="text" id="title" name="title" defaultValue={title} placeholder="Add a title here..." />
@@ -30,6 +34,9 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
+            </div>
+            <div className="form-row">
+                <TagSelect value={selectedTags} onChange={setSelectedTags} />
             </div>
             <div className="form-row">
                 <button type="button" onClick={onClose}>Cancel</button>
