@@ -1,25 +1,39 @@
-import React from "react";
-import type {Task} from "../../hooks/useTasks.ts";
+import React, { useState } from "react";
+import type { Task } from "../../hooks/useTasks.ts";
 import "../../styles/Lists/TaskList.css";
+import ListItem from "./ListItem/ListItem.tsx";
 
 interface TaskListProps {
     tasks: Task[];
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-    if (tasks.length === 0) return <p>No tasks found.</p>;
+    const [taskList, setTaskList] = useState(tasks);
+
+    const toggleTask = (id: string | undefined, newStatus: boolean) => {
+        setTaskList((prev) =>
+            prev.map((task) =>
+                task.id === id ? { ...task, completed: newStatus } : task
+            )
+        );
+    };
+
+    if (taskList.length === 0) return <p>No tasks found.</p>;
 
     return (
-        <ul>
-            {tasks.map((task) => (
-                <li key={task.id} className="task-item">
-                    <h3>{task.title}</h3>
-                    <p>{task.description}</p>
-                    <p>Priority: {task.priority}</p>
-                    <p>Status: {task.completed ? "Done" : "Pending"}</p>
-                </li>
+        <div>
+            {taskList.map((task) => (
+                <ListItem
+                    key={task.id}
+                    kind="task"
+                    title={task.title}
+                    description={task.description}
+                    completed={task.completed}
+                    priority={task.priority}
+                    onToggle={(newStatus) => toggleTask(task.id, newStatus)}
+                />
             ))}
-        </ul>
+        </div>
     );
 };
 

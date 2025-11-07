@@ -1,0 +1,23 @@
+.list-item {
+    display: flex;
+    align-items: center;
+    color: var(--tx-mint);
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.priority-high {
+    border-left: 5px solid var(--ac-aqua);
+}
+.priority-medium {
+    border-left: 5px solid var(--pr-violet);
+}
+.priority-low {
+    border-left: 5px solid var(--nb-gunmetal);
+}
+
+.list-item input[type="checkbox"] {
+    transform: scale(2);
+    margin-right: 20px;
+    accent-color: var(--ac-aqua);
+}
