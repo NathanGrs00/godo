@@ -2,14 +2,13 @@ import React, {type ReactNode} from "react";
 import '../../styles/NavBar/SideNavBarItem.css';
 
 interface SideNavBarItemProps {
-    icon: ReactNode
+    icon: ReactNode;
+    onClick?: () => void;
 }
 
-const SideNavBarItem: React.FC<SideNavBarItemProps> = ({
-    icon,
-}) => {
+const SideNavBarItem: React.FC<SideNavBarItemProps> = ({ icon, onClick }) => {
     return (
-        <div className="side-nav-bar-item">
+        <div className="side-nav-bar-item" onClick={onClick}>
             {icon}
         </div>
     );
