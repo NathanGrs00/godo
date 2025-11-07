@@ -10,16 +10,10 @@
     background-color: var(--nb-gunmetal);
     border-radius: 15px;
     color: var(--tx-mint);
-    height: 80vh;
+    height: fit-content;
     width: clamp(200px, 50%, 600px);
+    padding: 30px 10px 30px 10px;
     z-index: 20;
-}
-
-.form-label-row, .form-input-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
 }
 
 #title {
@@ -29,4 +23,51 @@
     background-color: var(--nb-gunmetal);
     color: var(--tx-mint);
     border: none;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.form-row label{
+    font-size: 1.2rem;
+    width: 125px;
+}
+
+.form-row input,
+.form-row select {
+    flex: 1;
+    padding: 15px;
+    background: var(--nb-gunmetal);
+    color: var(--tx-mint);
+    border: 1px solid var(--tx-mint);
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.form-row button {
+    color: var(--tx-mint);
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--pr-violet);
+    border-radius: 15px;
+    border: none;
+    width: 100px;
+    height: 50px;
+    padding: 0;
+}
+
+.form-row button:last-child:hover {
+    color: var(--ac-aqua);
+    border: 1px solid var(--ac-aqua);
+}
+
+.form-row button:first-child {
+    background-color: var(--nb-gunmetal);
+    color: var(--ac-cherise);
+    border: 2px solid var(--bg-dark-blue);
 }

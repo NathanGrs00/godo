@@ -9,7 +9,7 @@ interface AddButtonProps {
 
 const AddButton: React.FC<AddButtonProps> = ({ text, onClick }) => {
     return (
-        <button
+        <button className="add-button"
             onClick={onClick}
         >
             <AddIcon className={"add-icon"}/>

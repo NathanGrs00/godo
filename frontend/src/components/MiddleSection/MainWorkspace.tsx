@@ -36,7 +36,7 @@ const TaskWorkspace: React.FC = () => {
             {loading && <p>Loading tasks...</p>}
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <TaskList tasks={tasks} />}
-            <AddButton text={"Add Task"} onClick={tasks} />
+            <AddButton text={"Add Task"}/>
             <>
                 <div className="mutate-task-backdrop"/>
                 <MutateTaskForm/>
@@ -56,7 +56,7 @@ const DeadlineWorkspace: React.FC = () => {
             {loading && <p>Loading deadlines...</p>}
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <DeadlineList deadlines={deadlines} />}
-            <AddButton text={"Add Deadline"} onClick={deadlines} />
+            <AddButton text={"Add Deadline"} />
         </main>
     );
 }
