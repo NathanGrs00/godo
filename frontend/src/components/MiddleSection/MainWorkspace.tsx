@@ -1,7 +1,7 @@
 import React from "react";
 import TitleHeader from "./TitleHeader.tsx";
 import TaskIcon from "../../assets/icons/NavBar/TaskIcon.tsx";
-import "../../styles/MainWorkspace.css";
+import "../../styles/MiddleSection/MainWorkspace.css";
 import {useTasks} from "../../hooks/useTasks.ts";
 import TaskList from "../Lists/TaskList.tsx";
 import DeadlineIcon from "../../assets/icons/NavBar/DeadlineIcon.tsx";

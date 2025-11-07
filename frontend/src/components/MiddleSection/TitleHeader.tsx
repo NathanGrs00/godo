@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/TitleHeader/TitleHeader.css";
+import "../../styles/MiddleSection/TitleHeader/TitleHeader.css";
 
 interface TitleHeaderProps {
     icon: React.ReactNode;
