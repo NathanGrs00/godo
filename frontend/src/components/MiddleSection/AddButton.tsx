@@ -12,7 +12,7 @@ const AddButton: React.FC<AddButtonProps> = ({ text, onClick }) => {
         <button
             onClick={onClick}
         >
-            <AddIcon/>
+            <AddIcon className={"add-icon"}/>
             {text}
         </button>
     );

@@ -1,0 +1,33 @@
+button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--tx-mint);
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--nb-gunmetal);
+    height: 75px;
+    width: fit-content;
+    margin-top: auto;
+    border-radius: 15px;
+    border: none;
+    padding-right: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--pr-violet);
+    color: var(--tx-mint);
+    transition: .5s;
+}
+
+button:active {
+    transition: 0s;
+    background-color: var(--ac-cherise);
+}
+
+.add-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}

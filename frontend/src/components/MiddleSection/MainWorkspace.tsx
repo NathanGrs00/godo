@@ -7,6 +7,7 @@ import TaskList from "../Lists/TaskList.tsx";
 import DeadlineIcon from "../../assets/icons/NavBar/DeadlineIcon.tsx";
 import DeadlineList from "../Lists/DeadlineList.tsx";
 import {useDeadlines} from "../../hooks/useDeadlines.ts";
+import AddButton from "./AddButton.tsx";
 
 interface MainWorkspaceProps {
     route?: string;
@@ -33,6 +34,7 @@ const TaskWorkspace: React.FC = () => {
             {loading && <p>Loading tasks...</p>}
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <TaskList tasks={tasks} />}
+            <AddButton text={"Add Task"} onClick={tasks} />
         </main>
     );
 }
@@ -48,6 +50,7 @@ const DeadlineWorkspace: React.FC = () => {
             {loading && <p>Loading deadlines...</p>}
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <DeadlineList deadlines={deadlines} />}
+            <AddButton text={"Add Deadline"} onClick={deadlines} />
         </main>
     );
 }
