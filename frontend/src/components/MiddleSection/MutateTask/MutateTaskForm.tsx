@@ -6,15 +6,17 @@ interface MutateTaskFormProps {
     description?: string;
     priority?: string;
     //TODO: Add tag and deadline fields
+    onClose?: () => void;
 }
 
 const MutateTaskForm: React.FC<MutateTaskFormProps> = ({
     title = '',
     description = '',
-    priority = ''
+    priority = '',
+    onClose
 } ) => {
     return (
-        <form className="mutate-task-form">
+        <form className="mutate-task-form" onSubmit={(e) => e.preventDefault()}>
             <input type="text" id="title" name="title" defaultValue={title} placeholder="Add a title here..." />
             <div className="form-row">
                 <label htmlFor="description">Description:</label>
@@ -30,7 +32,7 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({
                 </select>
             </div>
             <div className="form-row">
-                <button>Cancel</button>
+                <button type="button" onClick={onClose}>Cancel</button>
                 <button>Save</button>
             </div>
         </form>

@@ -27,6 +27,15 @@ const MainWorkspace: React.FC<MainWorkspaceProps> = ({route}) => {
 // TODO: onClick should open a form to add a new task
 const TaskWorkspace: React.FC = () => {
     const { tasks, loading, error } = useTasks();
+    const [showForm, setShowForm] = React.useState(false);
+
+    React.useEffect(() => {
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setShowForm(false);
+        }
+        window.addEventListener('keydown', handleEscape);
+        return () => window.removeEventListener('keydown', handleEscape);
+    })
 
     return (
         <main className="main-workspace">
@@ -36,11 +45,14 @@ const TaskWorkspace: React.FC = () => {
             {loading && <p>Loading tasks...</p>}
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <TaskList tasks={tasks} />}
-            <AddButton text={"Add Task"}/>
-            <>
-                <div className="mutate-task-backdrop"/>
-                <MutateTaskForm/>
-            </>
+
+            <AddButton text={"Add Task"} onClick={() => setShowForm(true)} />
+            {showForm && (
+                <>
+                    <div className="mutate-task-backdrop" onClick={() => setShowForm(false)}/>
+                    <MutateTaskForm onClose={() => setShowForm(false)}/>
+                </>
+            )}
         </main>
     );
 }

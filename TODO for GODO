@@ -1,10 +1,7 @@
 MutateForm:
-1. In the mutate form, make clicking outside close the form without saving.
-2. In the mutate form, add a "Cancel" button that closes the form without saving
-3. In the mutate form, add a "Save" button that saves the changes and closes the form.
-4. Ensure that the "Save" button is only enabled when there are changes to save.
-5. Enable selecting tags
-6. Enable selecting deadlines
-7. Add validation to ensure all required fields are filled before saving.
-8. Display error messages for any validation failures.
-9. When pressing "Escape" key, close the form without saving.
+1. In the mutate form, add a "Save" button that saves the changes and closes the form.
+2. Ensure that the "Save" button is only enabled when there are changes to save.
+3. Enable selecting tags
+4. Enable selecting deadlines
+5. Add validation to ensure all required fields are filled before saving.
+6. Display error messages for any validation failures.
