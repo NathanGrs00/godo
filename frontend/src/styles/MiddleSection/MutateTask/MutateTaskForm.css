@@ -1,2 +1,32 @@
 .mutate-task-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--nb-gunmetal);
+    border-radius: 15px;
+    color: var(--tx-mint);
+    height: 80vh;
+    width: clamp(200px, 50%, 600px);
+    z-index: 20;
+}
+
+.form-label-row, .form-input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#title {
+    height: 5%;
+    width: 90%;
+    font-size: 1.5rem;
+    background-color: var(--nb-gunmetal);
+    color: var(--tx-mint);
+    border: none;
 }

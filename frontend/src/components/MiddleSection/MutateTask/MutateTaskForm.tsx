@@ -17,25 +17,20 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({
 } ) => {
     return (
         <form className="mutate-task-form">
-            <div>
-                <label htmlFor="title">Title:</label>
-                <input type="text" id="title" name="title" defaultValue={title} />
-            </div>
-            <div>
+            <input type="text" id="title" name="title" defaultValue={title} placeholder="Add a title here..." />
+            <div className="form-label-row">
                 <label htmlFor="description">Description:</label>
-                <textarea id="description" name="description" defaultValue={description} />
-            </div>
-            <div>
                 <label htmlFor="priority">Priority:</label>
+                <label htmlFor="completed">Completed:</label>
+            </div>
+            <div className="form-input-row">
+                <textarea id="description" name="description" defaultValue={description} />
                 <select id="priority" name="priority" defaultValue={priority}>
                     <option value="">Select priority</option>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
-            </div>
-            <div>
-                <label htmlFor="completed">Completed:</label>
                 <input type="checkbox" id="completed" name="completed" defaultChecked={completed} />
             </div>
         </form>

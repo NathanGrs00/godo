@@ -8,6 +8,7 @@ import DeadlineIcon from "../../assets/icons/NavBar/DeadlineIcon.tsx";
 import DeadlineList from "../Lists/DeadlineList.tsx";
 import {useDeadlines} from "../../hooks/useDeadlines.ts";
 import AddButton from "./AddButton.tsx";
+import MutateTaskForm from "./MutateTask/MutateTaskForm.tsx";
 
 interface MainWorkspaceProps {
     route?: string;
@@ -23,6 +24,7 @@ const MainWorkspace: React.FC<MainWorkspaceProps> = ({route}) => {
     }
 }
 
+// TODO: onClick should open a form to add a new task
 const TaskWorkspace: React.FC = () => {
     const { tasks, loading, error } = useTasks();
 
@@ -35,6 +37,10 @@ const TaskWorkspace: React.FC = () => {
             {error && <p className="error-message">Error: {error}</p>}
             {!loading && !error && <TaskList tasks={tasks} />}
             <AddButton text={"Add Task"} onClick={tasks} />
+            <>
+                <div className="mutate-task-backdrop"/>
+                <MutateTaskForm/>
+            </>
         </main>
     );
 }
