@@ -4,11 +4,25 @@ import TaskIcon from "../../assets/icons/NavBar/TaskIcon.tsx";
 import "../../styles/MainWorkspace.css";
 import {useTasks} from "../../hooks/useTasks.ts";
 import TaskList from "../Lists/TaskList.tsx";
+import DeadlineIcon from "../../assets/icons/NavBar/DeadlineIcon.tsx";
+import DeadlineList from "../Lists/DeadlineList.tsx";
+import {useDeadlines} from "../../hooks/useDeadlines.ts";
 
 interface MainWorkspaceProps {
+    route?: string;
 }
 
-const MainWorkspace: React.FC<MainWorkspaceProps> = () => {
+const MainWorkspace: React.FC<MainWorkspaceProps> = ({route}) => {
+    if (route === "tasks") {
+        return <TaskWorkspace />;
+    } else if (route === "deadlines") {
+        return <DeadlineWorkspace />;
+    } else {
+        return <div className="main-workspace"><p>Please select a valid route.</p></div>;
+    }
+}
+
+const TaskWorkspace: React.FC = () => {
     const { tasks, loading, error } = useTasks();
 
     return (
@@ -23,4 +37,18 @@ const MainWorkspace: React.FC<MainWorkspaceProps> = () => {
     );
 }
 
+const DeadlineWorkspace: React.FC = () => {
+    const { deadlines, loading, error } = useDeadlines();
+
+    return (
+        <main className="main-workspace">
+            <TitleHeader title={"Deadlines"} icon={<DeadlineIcon/>} />
+            <hr className="title-header-line"/>
+
+            {loading && <p>Loading deadlines...</p>}
+            {error && <p className="error-message">Error: {error}</p>}
+            {!loading && !error && <DeadlineList deadlines={deadlines} />}
+        </main>
+    );
+}
 export default MainWorkspace;

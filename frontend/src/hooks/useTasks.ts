@@ -6,6 +6,7 @@ export interface Task {
     description: string;
     priority: string;
     completed: boolean;
+    tags: string[];
 }
 
 export const useTasks = () => {

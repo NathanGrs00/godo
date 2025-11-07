@@ -47,6 +47,7 @@ func SetupRoutes(r *gin.Engine) {
 		deadlines.POST("/", deadlinesHandler.Create)
 		deadlines.PUT("/:id", deadlinesHandler.Update)
 		deadlines.DELETE("/:id", deadlinesHandler.Delete)
+		deadlines.GET("/dummies", deadlinesHandler.DummyDeadlines)
 	}
 
 	//TODO: Settings need different handlers instead of CRUD operations.

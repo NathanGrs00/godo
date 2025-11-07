@@ -23,10 +23,11 @@ function App() {
             </SideNavBar>
 
             <Routes>
-                <Route path="/" element={<MainWorkspace />} />
+                <Route path="/" element={<MainWorkspace route={"tasks"}/>} />
+                //TODO: do the other routes
                 <Route path="/users" element={<div>Users Page</div>} />
                 <Route path="/search" element={<div>Search Page</div>} />
-                <Route path="/deadlines" element={<div>Deadlines Page</div>} />
+                <Route path="/deadlines" element={<MainWorkspace route={"deadlines"}/>} />
                 <Route path="/settings" element={<div>Settings Page</div>} />
             </Routes>
         </>

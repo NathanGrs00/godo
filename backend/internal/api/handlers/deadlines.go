@@ -21,7 +21,7 @@ func (h *DeadlineHandler) Create(c *gin.Context)  { c.JSON(201, "created") }
 func (h *DeadlineHandler) Update(c *gin.Context)  { c.JSON(200, "updated") }
 func (h *DeadlineHandler) Delete(c *gin.Context)  { c.JSON(200, "deleted") }
 
-func (h *TaskHandler) DummyDeadlines(c *gin.Context) {
+func (h *DeadlineHandler) DummyDeadlines(c *gin.Context) {
 	dummyDeadlines := []models.Deadline{
 		{
 			ID:          primitive.NewObjectID(),
@@ -30,14 +30,18 @@ func (h *TaskHandler) DummyDeadlines(c *gin.Context) {
 			Date:        time.Now().Add(48 * time.Hour),
 			Passed:      false,
 			UserId:      primitive.NewObjectID(),
+			TaskIDs:     []primitive.ObjectID{},
+			TagIDs:      []primitive.ObjectID{},
 		},
 		{
 			ID:          primitive.NewObjectID(),
 			Title:       "Deadline 2",
-			Description: "First dummy deadline",
-			Date:        time.Now().Add(48 * time.Hour),
+			Description: "Second dummy deadline",
+			Date:        time.Now().Add(72 * time.Hour),
 			Passed:      false,
 			UserId:      primitive.NewObjectID(),
+			TaskIDs:     []primitive.ObjectID{},
+			TagIDs:      []primitive.ObjectID{},
 		},
 	}
 
