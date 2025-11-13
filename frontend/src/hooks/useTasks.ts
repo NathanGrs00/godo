@@ -10,7 +10,7 @@ export const useTasks = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const data = await taskService.getDummyTasks();
+                const data = await taskService.getTasks();
                 setTasks(data);
             } catch (err: any) {
                 setError(err.message ?? "An unknown error occurred");

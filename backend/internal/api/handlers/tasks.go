@@ -17,7 +17,19 @@ func NewTaskHandler(repo _interface.TaskRepository) *TaskHandler {
 	return &TaskHandler{repo: repo}
 }
 
-func (h *TaskHandler) GetAll(c *gin.Context)  { c.JSON(200, "all tasks") }
+func (h *TaskHandler) GetAll(c *gin.Context) {
+	tasks, err := h.repo.GetAll(c.Request.Context())
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"message": "All tasks fetched successfully",
+		"tasks":   tasks,
+	})
+}
+
 func (h *TaskHandler) GetByID(c *gin.Context) { c.JSON(200, "one task") }
 
 func (h *TaskHandler) Create(c *gin.Context) {
@@ -43,28 +55,3 @@ func (h *TaskHandler) Create(c *gin.Context) {
 
 func (h *TaskHandler) Update(c *gin.Context) { c.JSON(200, "updated") }
 func (h *TaskHandler) Delete(c *gin.Context) { c.JSON(200, "deleted") }
-
-func (h *TaskHandler) DummyTasks(c *gin.Context) {
-	dummyTasks := []models.Task{
-		{
-			ID:          primitive.NewObjectID(),
-			Title:       "Task 1",
-			Description: "First dummy task",
-			Priority:    "High",
-			Completed:   false,
-			UserId:      primitive.NewObjectID(),
-		},
-		{
-			ID:          primitive.NewObjectID(),
-			Title:       "Task 2",
-			Description: "Second dummy task",
-			Priority:    "Medium",
-			Completed:   true,
-			UserId:      primitive.NewObjectID(),
-		},
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"tasks": dummyTasks,
-	})
-}

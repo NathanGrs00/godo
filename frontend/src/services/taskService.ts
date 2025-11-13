@@ -1,7 +1,10 @@
 import type {Task} from "../types";
 
-export const getDummyTasks = async (): Promise<Task[]> => {
-    const res = await fetch("http://localhost:8080/tasks/dummies");
+export const getTasks = async (): Promise<Task[]> => {
+    const res = await fetch("http://localhost:8080/tasks/" , {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    });
 
     if (!res.ok) {
         throw new Error("Failed to fetch tasks");
@@ -12,7 +15,7 @@ export const getDummyTasks = async (): Promise<Task[]> => {
 };
 
 export const createTask = async (task: Partial<Task>): Promise<Task> => {
-    const res = await fetch("http://localhost:8080/tasks", {
+    const res = await fetch("http://localhost:8080/tasks/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task),

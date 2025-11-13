@@ -30,6 +30,7 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({title = "",
                 description: formDescription,
                 priority: formPriority,
                 tags: selectedTags, // if you later add tags in Task type
+                completed: false,
             });
 
             // Optionally close the form or refresh task list
