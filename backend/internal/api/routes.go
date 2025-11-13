@@ -2,12 +2,13 @@ package api
 
 import (
 	"github.com/NathanGrs00/godo/internal/api/handlers"
+	_interface "github.com/NathanGrs00/godo/internal/repository/interface"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine) {
+func SetupRoutes(r *gin.Engine, taskRepo _interface.TaskRepository) {
 	userHandlers := handlers.NewUserHandler()
-	taskHandlers := handlers.NewTaskHandler()
+	taskHandlers := handlers.NewTaskHandler(taskRepo)
 	deadlinesHandler := handlers.NewDeadlineHandler()
 	tagHandlers := handlers.NewTagHandler()
 	settingsHandler := handlers.NewSettingsHandler()
