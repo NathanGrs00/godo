@@ -1,7 +1,7 @@
 import type {Task} from "../types";
 
 export const getTasks = async (): Promise<Task[]> => {
-    const res = await fetch("http://localhost:8080/tasks/" , {
+    const res = await fetch("http://localhost:8080/tasks/", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     });
@@ -11,8 +11,15 @@ export const getTasks = async (): Promise<Task[]> => {
     }
 
     const data = await res.json();
-    return data.tasks;
+
+    if (!data.tasks?.length) return [];
+
+    return data.tasks.map((t: any) => ({
+        ...t,
+        id: t.id.toString(),
+    }));
 };
+
 
 export const createTask = async (task: Partial<Task>): Promise<Task> => {
     const res = await fetch("http://localhost:8080/tasks/", {
