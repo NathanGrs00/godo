@@ -24,6 +24,16 @@ const MutateTaskForm: React.FC<MutateTaskFormProps> = ({title = "",
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!formTitle.trim()) {
+            alert("Title is required");
+            return;
+        }
+
+        if (!formPriority) {
+            alert("Priority must be selected");
+            return;
+        }
+
         try {
             await taskService.createTask({
                 title: formTitle,
