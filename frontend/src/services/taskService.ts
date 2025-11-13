@@ -28,3 +28,16 @@ export const createTask = async (task: Partial<Task>): Promise<Task> => {
     return res.json();
 }
 
+export const deleteTask = async (id: string): Promise<void> => {
+    const res = await fetch(`http://localhost:8080/tasks/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to delete task");
+    }
+
+    return;
+}
+

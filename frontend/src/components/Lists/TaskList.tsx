@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Task } from "../../hooks/useTasks";
 import TaskItem from "./ListItem/TaskItem.tsx";
+import * as taskService from "../../services/taskService.ts";
 
 interface TaskListProps {
     tasks: Task[];
@@ -15,6 +16,19 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
         );
     };
 
+    const deleteTask = (id: string) => {
+        if (!window.confirm("Are you sure you want to delete this task?")) return;
+
+        try {
+            await taskService.deleteTask(id);
+            setTaskList(prev => prev.filter(t => t.id !== id));
+        } catch (err: any) {
+            console.error("Failed to delete task:", err);
+            alert("Failed to delete task: " + err.message);
+        }
+    }
+
+
     if (taskList.length === 0) return <p>No tasks found.</p>;
 
     return (
@@ -24,6 +38,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                     key={task.id}
                     {...task}
                     onToggle={status => toggleTask(task.id, status)}
+                    onDelete={() => deleteTask(task.id)}
                 />
             ))}
         </div>

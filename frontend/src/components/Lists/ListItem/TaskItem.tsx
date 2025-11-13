@@ -1,9 +1,11 @@
 import React from "react";
 import "../../../styles/Lists/ListItem/ListItem.css";
 import type { Task } from "../../../hooks/useTasks";
+import DeleteIcon from "../../../assets/icons/DeleteIcon.tsx";
 
 interface TaskItemProps extends Task {
     onToggle?: (completed: boolean) => void;
+    onDelete?: () => void;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({
@@ -13,6 +15,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                                                completed = false,
                                                tags,
                                                onToggle,
+                                               onDelete,
                                            }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
         onToggle?.(e.target.checked);
@@ -30,6 +33,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
                     <ul>{tags.map((tag, i) => <li key={i}>{tag}</li>)}</ul>
                 </div>
             )}
+            <DeleteIcon onClick={onDelete} style={{cursor: "pointer"}}/>
         </div>
     );
 };
