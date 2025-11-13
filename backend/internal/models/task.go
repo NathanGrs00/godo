@@ -3,7 +3,7 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Task struct {
-	ID          primitive.ObjectID   `json:"id"`
+	ID          primitive.ObjectID   `bson:"_id" json:"id"`
 	Title       string               `json:"title"`
 	Description string               `json:"description"`
 	Priority    string               `json:"priority"`

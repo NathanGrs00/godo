@@ -35,7 +35,7 @@ export const deleteTask = async (id: string): Promise<void> => {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to delete task");
+        throw new Error("Failed to delete task" + await res.text());
     }
 
     return;

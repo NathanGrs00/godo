@@ -54,4 +54,20 @@ func (h *TaskHandler) Create(c *gin.Context) {
 }
 
 func (h *TaskHandler) Update(c *gin.Context) { c.JSON(200, "updated") }
-func (h *TaskHandler) Delete(c *gin.Context) { c.JSON(200, "deleted") }
+func (h *TaskHandler) Delete(c *gin.Context) {
+	idParam := c.Param("id") // get id from URL
+	objID, err := primitive.ObjectIDFromHex(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid task id"})
+		return
+	}
+
+	err = h.repo.Delete(c.Request.Context(), objID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to delete task for id " + idParam})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "task deleted successfully"})
+
+}

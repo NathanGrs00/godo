@@ -8,7 +8,7 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-    const [taskList, setTaskList] = useState(tasks);
+    const [taskList, setTaskList] = useState(tasks || []);
 
     const toggleTask = (id: string, newStatus: boolean) => {
         setTaskList(prev =>
@@ -16,20 +16,21 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
         );
     };
 
-    const deleteTask = (id: string) => {
+    const deleteTask = async (_id: string) => {
         if (!window.confirm("Are you sure you want to delete this task?")) return;
 
         try {
-            await taskService.deleteTask(id);
-            setTaskList(prev => prev.filter(t => t.id !== id));
+            await taskService.deleteTask(_id);
+            setTaskList(prev => prev.filter(t => t._id !== _id));
         } catch (err: any) {
             console.error("Failed to delete task:", err);
             alert("Failed to delete task: " + err.message);
         }
     }
 
-
-    if (taskList.length === 0) return <p>No tasks found.</p>;
+    if (taskList === undefined || taskList.length === 0) {
+        return <p>No tasks available.</p>;
+    }
 
     return (
         <div>
@@ -38,7 +39,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                     key={task.id}
                     {...task}
                     onToggle={status => toggleTask(task.id, status)}
-                    onDelete={() => deleteTask(task.id)}
+                    onDelete={() => deleteTask(task.id.toString())}
                 />
             ))}
         </div>

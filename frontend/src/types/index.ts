@@ -14,7 +14,7 @@ export interface Task {
 }
 
 export interface Deadline {
-    id: string;
+    _id: string;
     title: string;
     description: string;
     date: string;
