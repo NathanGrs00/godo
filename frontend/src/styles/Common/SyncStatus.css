@@ -1,0 +1,23 @@
+.sync-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--pr-violet);
+    white-space: nowrap;
+}
+
+.sync-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--pr-violet);
+}
+
+.sync-live .sync-dot {
+    background-color: var(--ac-aqua);
+}
+
+.sync-offline .sync-dot {
+    background-color: var(--ac-cherise);
+}

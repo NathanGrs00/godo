@@ -1,29 +1,7 @@
-import { useState, useEffect } from "react";
-import type {Tag} from "../types";
-import * as tagService from "../services/tagService";
+import { useData } from "../context/dataContext.ts";
 
+/** The user's tags, kept in sync across devices. */
 export const useTags = () => {
-    const [tags, setTags] = useState<Tag[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchTags = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const data = await tagService.getAllTags();
-                setTags(data);
-            } catch (err) {
-                setError("Failed to load tags");
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTags();
-    }, []);
-
+    const { tags, loading, error } = useData();
     return { tags, loading, error };
 };

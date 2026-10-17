@@ -1,0 +1,50 @@
+@import "../MiddleSection/MutateForm.css";
+
+.login-page {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: min(400px, 100%);
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: var(--nb-gunmetal);
+    border-radius: 15px;
+    color: var(--tx-mint);
+}
+
+.login-form h1 {
+    margin: 0;
+    color: var(--ac-aqua);
+}
+
+.login-subtitle {
+    margin: 0 0 12px;
+    color: var(--pr-violet);
+}
+
+.login-form input {
+    padding: 12px;
+    background: var(--bg-dark-blue);
+    color: var(--tx-mint);
+    border: 1px solid var(--pr-violet);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: inherit;
+}
+
+.login-form .field-error {
+    width: auto;
+}
+
+.login-form .save-button {
+    margin-top: 12px;
+}

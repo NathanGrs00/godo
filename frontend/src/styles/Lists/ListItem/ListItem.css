@@ -16,7 +16,13 @@
     border-left: 5px solid var(--nb-gunmetal);
 }
 
+.list-item.completed h3 {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
 .list-item input[type="checkbox"] {
+    flex-shrink: 0;
     transform: scale(2);
     margin-right: 20px;
     margin-left: 20px;
@@ -47,13 +53,95 @@
     transform: scale(1);
 }
 
+/* The clickable text area that opens the edit form */
+.list-item-body {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 20px;
+    min-width: 0;
+    text-align: left;
+    color: inherit;
+    font: inherit;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
 
-h3, p {
-    margin-right: 20px;
+.list-item-body:hover {
+    background-color: var(--nb-gunmetal);
+}
+
+.list-item-body h3,
+.list-item-body p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.list-item-body p {
+    color: var(--pr-violet);
+}
+
+.list-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+}
+
+.deadline-ref,
+.task-ref {
+    font-size: 0.85rem;
+    color: var(--pr-violet);
+}
+
+.task-ref.completed {
+    text-decoration: line-through;
+}
+
+.deadline-item {
+    border-left: 5px solid var(--ac-aqua);
+}
+
+.deadline-item-passed {
+    border-left-color: var(--ac-cherise);
+    opacity: 0.75;
+}
+
+.deadline-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.95rem;
+}
+
+.deadline-upcoming {
+    color: var(--ac-aqua);
+}
+
+.deadline-passed {
+    color: var(--ac-cherise);
+}
+
+/* Small borderless button wrapping an icon, e.g. delete */
+.icon-button {
+    flex-shrink: 0;
+    display: grid;
+    place-content: center;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.icon-button:hover {
+    background-color: var(--nb-gunmetal);
 }
 
 @media (max-width: 600px) {
-    p {
+    .list-item-body p {
         display: none;
     }
 }

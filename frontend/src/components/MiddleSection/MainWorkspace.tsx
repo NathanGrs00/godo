@@ -1,75 +1,77 @@
-import React from "react";
-import TitleHeader from "./TitleHeader.tsx";
+import React, { useState } from "react";
 import TaskIcon from "../../assets/icons/NavBar/TaskIcon.tsx";
-import "../../styles/MiddleSection/MainWorkspace.css";
-import {useTasks} from "../../hooks/useTasks.ts";
-import TaskList from "../Lists/TaskList.tsx";
 import DeadlineIcon from "../../assets/icons/NavBar/DeadlineIcon.tsx";
+import { useTasks } from "../../hooks/useTasks.ts";
+import { useDeadlines } from "../../hooks/useDeadlines.ts";
+import TaskList from "../Lists/TaskList.tsx";
 import DeadlineList from "../Lists/DeadlineList.tsx";
-import {useDeadlines} from "../../hooks/useDeadlines.ts";
 import AddButton from "./AddButton.tsx";
 import MutateTaskForm from "./MutateTask/MutateTaskForm.tsx";
+import MutateDeadlineForm from "./MutateDeadline/MutateDeadlineForm.tsx";
+import Modal from "../Common/Modal.tsx";
+import PageLayout from "../Common/PageLayout.tsx";
+import type { Deadline, Task } from "../../types";
 
 interface MainWorkspaceProps {
-    route?: string;
+    route: "tasks" | "deadlines";
 }
 
-const MainWorkspace: React.FC<MainWorkspaceProps> = ({route}) => {
-    if (route === "tasks") {
-        return <TaskWorkspace />;
-    } else if (route === "deadlines") {
-        return <DeadlineWorkspace />;
-    } else {
-        return <div className="main-workspace"><p>Please select a valid route.</p></div>;
-    }
-}
+const MainWorkspace: React.FC<MainWorkspaceProps> = ({ route }) =>
+    route === "tasks" ? <TaskWorkspace /> : <DeadlineWorkspace />;
 
-// TODO: onClick should open a form to add a new task
+/**
+ * Which form is open: closed (null), a new item ("new") or an existing item.
+ */
+type FormTarget<T> = null | "new" | T;
+
 const TaskWorkspace: React.FC = () => {
     const { tasks, loading, error } = useTasks();
-    const [showForm, setShowForm] = React.useState(false);
-
-    React.useEffect(() => {
-        const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') setShowForm(false);
-        }
-        window.addEventListener('keydown', handleEscape);
-        return () => window.removeEventListener('keydown', handleEscape);
-    })
+    const [target, setTarget] = useState<FormTarget<Task>>(null);
+    const close = () => setTarget(null);
 
     return (
-        <main className="main-workspace">
-            <TitleHeader title={"Tasks"} icon={<TaskIcon/>} />
-            <hr className="title-header-line"/>
-
-            {loading && <p>Loading tasks...</p>}
+        <PageLayout title="Tasks" icon={<TaskIcon />}>
+            {loading && <p className="empty-message">Loading tasks...</p>}
             {error && <p className="error-message">Error: {error}</p>}
-            {!loading && !error && <TaskList tasks={tasks} />}
+            {!loading && !error && <TaskList tasks={tasks} onEdit={setTarget} />}
 
-            <AddButton text={"Add Task"} onClick={() => setShowForm(true)} />
-            {showForm && (
-                <>
-                    <div className="mutate-task-backdrop" onClick={() => setShowForm(false)}/>
-                    <MutateTaskForm onClose={() => setShowForm(false)}/>
-                </>
+            <AddButton text="Add Task" onClick={() => setTarget("new")} />
+            {target && (
+                <Modal onClose={close}>
+                    <MutateTaskForm
+                        key={target === "new" ? "new" : target.id}
+                        task={target === "new" ? undefined : target}
+                        onClose={close}
+                    />
+                </Modal>
             )}
-        </main>
+        </PageLayout>
     );
-}
+};
 
 const DeadlineWorkspace: React.FC = () => {
     const { deadlines, loading, error } = useDeadlines();
+    const [target, setTarget] = useState<FormTarget<Deadline>>(null);
+    const close = () => setTarget(null);
 
     return (
-        <main className="main-workspace">
-            <TitleHeader title={"Deadlines"} icon={<DeadlineIcon/>} />
-            <hr className="title-header-line"/>
-
-            {loading && <p>Loading deadlines...</p>}
+        <PageLayout title="Deadlines" icon={<DeadlineIcon />}>
+            {loading && <p className="empty-message">Loading deadlines...</p>}
             {error && <p className="error-message">Error: {error}</p>}
-            {!loading && !error && <DeadlineList deadlines={deadlines} />}
-            <AddButton text={"Add Deadline"} />
-        </main>
+            {!loading && !error && <DeadlineList deadlines={deadlines} onEdit={setTarget} />}
+
+            <AddButton text="Add Deadline" onClick={() => setTarget("new")} />
+            {target && (
+                <Modal onClose={close}>
+                    <MutateDeadlineForm
+                        key={target === "new" ? "new" : target.id}
+                        deadline={target === "new" ? undefined : target}
+                        onClose={close}
+                    />
+                </Modal>
+            )}
+        </PageLayout>
     );
-}
+};
+
 export default MainWorkspace;

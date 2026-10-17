@@ -1,50 +1,14 @@
-import type {Task} from "../types";
+import { apiRequest } from "../api/client.ts";
+import type { Task, TaskInput } from "../types";
 
-export const getTasks = async (): Promise<Task[]> => {
-    const res = await fetch("http://localhost:8080/tasks/", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-    });
+export const getTasks = async (): Promise<Task[]> =>
+    (await apiRequest<{ tasks: Task[] }>("/tasks")).tasks;
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch tasks");
-    }
+export const createTask = async (input: TaskInput): Promise<Task> =>
+    (await apiRequest<{ task: Task }>("/tasks", { method: "POST", body: input })).task;
 
-    const data = await res.json();
+export const updateTask = async (id: string, input: TaskInput): Promise<Task> =>
+    (await apiRequest<{ task: Task }>(`/tasks/${id}`, { method: "PUT", body: input })).task;
 
-    if (!data.tasks?.length) return [];
-
-    return data.tasks.map((t: any) => ({
-        ...t,
-        id: t.id.toString(),
-    }));
-};
-
-
-export const createTask = async (task: Partial<Task>): Promise<Task> => {
-    const res = await fetch("http://localhost:8080/tasks/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(task),
-    });
-
-    if (!res.ok) {
-        throw new Error("Failed to create task");
-    }
-
-    return res.json();
-}
-
-export const deleteTask = async (id: string): Promise<void> => {
-    const res = await fetch(`http://localhost:8080/tasks/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-    });
-
-    if (!res.ok) {
-        throw new Error("Failed to delete task" + await res.text());
-    }
-
-    return;
-}
-
+export const deleteTask = (id: string): Promise<void> =>
+    apiRequest<void>(`/tasks/${id}`, { method: "DELETE" });

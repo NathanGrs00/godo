@@ -1,0 +1,31 @@
+.chip {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid var(--pr-violet);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--tx-mint);
+    background: none;
+}
+
+.option-picker {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.option-picker-empty {
+    color: var(--pr-violet);
+}
+
+.chip-toggle {
+    font-size: 1rem;
+    padding: 6px 14px;
+}
+
+.chip-toggle.selected {
+    background-color: var(--pr-violet);
+    color: var(--bg-dark-blue);
+    font-weight: bold;
+}

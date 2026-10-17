@@ -1,0 +1,81 @@
+@import "../MiddleSection/MutateForm.css";
+
+.page-section {
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+.page-section h2 {
+    margin: 10px 0;
+}
+
+.hint {
+    color: var(--pr-violet);
+    max-width: 600px;
+}
+
+.page-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.search-input,
+.tag-form input[type="text"],
+.tag-row input[type="text"] {
+    padding: 12px;
+    background: var(--nb-gunmetal);
+    color: var(--tx-mint);
+    border: 1px solid var(--pr-violet);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: inherit;
+}
+
+.search-input {
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+.result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tag-form,
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.tag-form input[type="color"],
+.tag-row input[type="color"] {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tag-row input[type="text"] {
+    background: none;
+    border-color: transparent;
+}
+
+.tag-row input[type="text"]:focus {
+    border-color: var(--pr-violet);
+    outline: none;
+}
