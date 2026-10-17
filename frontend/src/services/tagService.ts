@@ -1,12 +1,14 @@
-import type {Tag} from "../types";
+import { apiRequest } from "../api/client.ts";
+import type { Tag, TagInput } from "../types";
 
-export const getAllTags = async (): Promise<Tag[]> => {
-    const res = await fetch("http://localhost:8080/tags/dummies");
+export const getTags = async (): Promise<Tag[]> =>
+    (await apiRequest<{ tags: Tag[] }>("/tags")).tags;
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch tags");
-    }
+export const createTag = async (input: TagInput): Promise<Tag> =>
+    (await apiRequest<{ tag: Tag }>("/tags", { method: "POST", body: input })).tag;
 
-    const data = await res.json();
-    return data.tags;
-};
+export const updateTag = async (id: string, input: TagInput): Promise<Tag> =>
+    (await apiRequest<{ tag: Tag }>(`/tags/${id}`, { method: "PUT", body: input })).tag;
+
+export const deleteTag = (id: string): Promise<void> =>
+    apiRequest<void>(`/tags/${id}`, { method: "DELETE" });

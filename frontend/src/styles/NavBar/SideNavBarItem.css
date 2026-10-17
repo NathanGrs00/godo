@@ -4,7 +4,15 @@
     justify-content: center;
     width: 60%;
     margin: 10px 0;
+    padding: 6px;
     box-sizing: border-box;
+    background: none;
+    border: none;
+    border-radius: 12px;
+}
+
+.side-nav-bar-item.active {
+    background-color: var(--bg-dark-blue);
 }
 
 .side-nav-bar-item svg {

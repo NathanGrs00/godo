@@ -1,17 +1,57 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-type AuthHandler struct{}
+	"github.com/NathanGrs00/godo/internal/api/middleware"
+	"github.com/NathanGrs00/godo/internal/service"
+	"github.com/gin-gonic/gin"
+)
 
-func NewAuthHandler() *AuthHandler {
-	return &AuthHandler{}
+// AuthHandler serves registration, login and the current user.
+type AuthHandler struct {
+	service *service.AuthService
 }
 
-func (h *AuthHandler) Login(c *gin.Context) {
-	c.JSON(200, gin.H{"message": "This is the login endpoint."})
+// NewAuthHandler creates an AuthHandler.
+func NewAuthHandler(service *service.AuthService) *AuthHandler {
+	return &AuthHandler{service: service}
 }
 
+// Register handles POST /auth/register and returns {"token", "user"}.
 func (h *AuthHandler) Register(c *gin.Context) {
-	c.JSON(200, gin.H{"message": "This is the register endpoint."})
+	var in service.Credentials
+	if !bindJSON(c, &in) {
+		return
+	}
+	session, err := h.service.Register(c.Request.Context(), in)
+	if err != nil {
+		writeError(c, err)
+		return
+	}
+	c.JSON(http.StatusCreated, session)
+}
+
+// Login handles POST /auth/login and returns {"token", "user"}.
+func (h *AuthHandler) Login(c *gin.Context) {
+	var in service.Credentials
+	if !bindJSON(c, &in) {
+		return
+	}
+	session, err := h.service.Login(c.Request.Context(), in)
+	if err != nil {
+		writeError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, session)
+}
+
+// Me handles GET /auth/me and returns {"user"}.
+func (h *AuthHandler) Me(c *gin.Context) {
+	user, err := h.service.Me(c.Request.Context(), middleware.UserID(c))
+	if err != nil {
+		writeError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"user": user})
 }

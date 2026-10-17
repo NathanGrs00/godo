@@ -1,19 +1,14 @@
-import type {Deadline} from "../types";
+import { apiRequest } from "../api/client.ts";
+import type { Deadline, DeadlineInput } from "../types";
 
-export const getDummyDeadlines = async (): Promise<Deadline[]> => {
-    const res = await fetch("http://localhost:8080/deadlines/dummies");
-    if (!res.ok) {
-        throw new Error("Failed to fetch deadlines");
-    }
+export const getDeadlines = async (): Promise<Deadline[]> =>
+    (await apiRequest<{ deadlines: Deadline[] }>("/deadlines")).deadlines;
 
-    const data = await res.json();
+export const createDeadline = async (input: DeadlineInput): Promise<Deadline> =>
+    (await apiRequest<{ deadline: Deadline }>("/deadlines", { method: "POST", body: input })).deadline;
 
-    return (data.deadlines || []).map((d: any) => ({
-        id: d.ID || d.id || "",
-        title: d.Title || d.title,
-        description: d.Description || d.description,
-        date: new Date(d.Date || d.date).toISOString(),
-        passed: d.Passed ?? false,
-        tasks: d.tasks || [],
-    }));
-};
+export const updateDeadline = async (id: string, input: DeadlineInput): Promise<Deadline> =>
+    (await apiRequest<{ deadline: Deadline }>(`/deadlines/${id}`, { method: "PUT", body: input })).deadline;
+
+export const deleteDeadline = (id: string): Promise<void> =>
+    apiRequest<void>(`/deadlines/${id}`, { method: "DELETE" });

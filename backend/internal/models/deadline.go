@@ -6,13 +6,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// Deadline is a dated milestone that tasks can be linked to.
 type Deadline struct {
-	ID          primitive.ObjectID   `json:"id"`
-	Title       string               `json:"title"`
-	Description string               `json:"description"`
-	Date        time.Time            `json:"date"`
-	Passed      bool                 `json:"passed"`
-	UserId      primitive.ObjectID   `json:"user_id"`
-	TaskIDs     []primitive.ObjectID `json:"task_ids"`
-	TagIDs      []primitive.ObjectID `json:"tag_ids"`
+	Meta        `bson:",inline"`
+	Title       string               `bson:"title" json:"title"`
+	Description string               `bson:"description" json:"description"`
+	Date        time.Time            `bson:"date" json:"date"`
+	TagIDs      []primitive.ObjectID `bson:"tag_ids" json:"tag_ids"`
+	// Passed is computed when the deadline is read and is not stored.
+	Passed bool `bson:"-" json:"passed"`
 }

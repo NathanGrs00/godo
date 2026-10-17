@@ -1,0 +1,141 @@
+/* Shared by the task and deadline forms */
+.mutate-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--nb-gunmetal);
+    border-radius: 15px;
+    color: var(--tx-mint);
+    height: fit-content;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: clamp(280px, 50%, 600px);
+    padding: 30px 10px 30px 10px;
+    box-sizing: border-box;
+    z-index: 20;
+}
+
+.mutate-form-title {
+    width: 90%;
+    font-size: 1.5rem;
+    font-family: inherit;
+    background-color: var(--nb-gunmetal);
+    color: var(--tx-mint);
+    border: none;
+    border-bottom: 1px solid var(--pr-violet);
+    padding: 5px 0;
+}
+
+.mutate-form-title:focus {
+    outline: none;
+    border-bottom-color: var(--ac-aqua);
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.form-row label,
+.form-row .form-label {
+    font-size: 1.2rem;
+    width: 125px;
+    flex-shrink: 0;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    flex: 1;
+    min-width: 0;
+    padding: 15px;
+    background: var(--nb-gunmetal);
+    color: var(--tx-mint);
+    border: 1px solid var(--tx-mint);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    color-scheme: dark;
+}
+
+.form-row textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    justify-content: flex-end;
+}
+
+.field-error {
+    width: 90%;
+    margin: 6px 0 0;
+    color: var(--ac-cherise);
+}
+
+.save-button,
+.cancel-button {
+    color: var(--tx-mint);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: inherit;
+    background-color: var(--pr-violet);
+    border-radius: 15px;
+    border: none;
+    min-width: 100px;
+    height: 50px;
+    padding: 0 16px;
+}
+
+.save-button:hover:not(:disabled) {
+    color: var(--ac-aqua);
+    outline: 1px solid var(--ac-aqua);
+}
+
+.save-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cancel-button {
+    background-color: var(--nb-gunmetal);
+    color: var(--ac-cherise);
+    border: 2px solid var(--bg-dark-blue);
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: var(--ac-aqua);
+    font: inherit;
+    text-align: left;
+    padding: 4px 0;
+}
+
+.link-button:hover {
+    background: none;
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .mutate-form {
+        width: calc(100% - 32px);
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-row label,
+    .form-row .form-label {
+        width: auto;
+    }
+}

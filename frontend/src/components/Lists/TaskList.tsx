@@ -1,45 +1,52 @@
 import React, { useState } from "react";
-import type { Task } from "../../hooks/useTasks";
+import type { Task } from "../../types";
 import TaskItem from "./ListItem/TaskItem.tsx";
-import * as taskService from "../../services/taskService.ts";
+import { useData } from "../../context/dataContext.ts";
+import "../../styles/Lists/TaskList.css";
 
 interface TaskListProps {
     tasks: Task[];
+    onEdit: (task: Task) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-    const [taskList, setTaskList] = useState(tasks || []);
+/** Shows tasks, open ones first, and handles completing and deleting them. */
+const TaskList: React.FC<TaskListProps> = ({ tasks, onEdit }) => {
+    const { tags, deadlines, updateTask, deleteTask } = useData();
+    const [error, setError] = useState<string | null>(null);
 
-    const toggleTask = (id: string, newStatus: boolean) => {
-        setTaskList(prev =>
-            prev.map(t => (t.id === id ? { ...t, completed: newStatus } : t))
-        );
+    const run = async (action: () => Promise<unknown>) => {
+        setError(null);
+        try {
+            await action();
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Something went wrong");
+        }
     };
 
-    const deleteTask = async (id: string) => {
-        if (!window.confirm("Are you sure you want to delete this task?")) return;
+    const handleDelete = (task: Task) => {
+        if (!window.confirm(`Delete "${task.title}"?`)) return;
+        run(() => deleteTask(task.id));
+    };
 
-        try {
-            await taskService.deleteTask(id);
-            setTaskList(prev => prev.filter(t => t.id !== id));
-        } catch (err: any) {
-            console.error("Failed to delete task:", err);
-            alert("Failed to delete task: " + err.message);
-        }
+    if (tasks.length === 0) {
+        return <p className="empty-message">No tasks yet. Add one below.</p>;
     }
 
-    if (taskList === undefined || taskList.length === 0) {
-        return <p>No tasks available.</p>;
-    }
+    // Open tasks first; within each group keep the creation order
+    const sorted = [...tasks].sort((a, b) => Number(a.completed) - Number(b.completed));
 
     return (
-        <div>
-            {taskList.map(task => (
+        <div className="task-list">
+            {error && <p className="error-message" role="alert">{error}</p>}
+            {sorted.map(task => (
                 <TaskItem
                     key={task.id}
-                    {...task}
-                    onToggle={status => toggleTask(task.id, status)}
-                    onDelete={() => deleteTask(task.id.toString())}
+                    task={task}
+                    tags={tags.filter(tag => task.tag_ids.includes(tag.id))}
+                    deadlines={deadlines.filter(d => task.deadline_ids.includes(d.id))}
+                    onToggle={completed => run(() => updateTask(task, { completed }))}
+                    onEdit={() => onEdit(task)}
+                    onDelete={() => handleDelete(task)}
                 />
             ))}
         </div>

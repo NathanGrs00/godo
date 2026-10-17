@@ -1,31 +1,23 @@
 import React from "react";
-import { useTags } from "../../../hooks/useTags";
+import { useTags } from "../../../hooks/useTags.ts";
+import OptionPicker from "../../Common/OptionPicker.tsx";
 
 interface TagSelectProps {
     value: string[];
-    onChange: (tags: string[]) => void;
+    onChange: (tagIds: string[]) => void;
 }
 
+/** Pick tags for a task or deadline. Tags are created on the Settings page. */
 const TagSelect: React.FC<TagSelectProps> = ({ value, onChange }) => {
-    const { tags, loading, error } = useTags();
-
-    if (loading) return <p>Loading tags...</p>;
-    if (error) return <p>{error}</p>;
-
+    const { tags } = useTags();
     return (
-        <select
-            multiple
+        <OptionPicker
+            label="Tags"
+            options={tags.map(tag => ({ id: tag.id, label: tag.title, color: tag.color }))}
             value={value}
-            onChange={(e) =>
-                onChange([...e.target.selectedOptions].map(o => o.value))
-            }
-        >
-            {tags.map(tag => (
-                <option key={tag._id} value={tag._id}>
-                    {tag.title}
-                </option>
-            ))}
-        </select>
+            onChange={onChange}
+            emptyText="No tags yet – create them in Settings"
+        />
     );
 };
 
