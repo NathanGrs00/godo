@@ -1,72 +1,75 @@
+// Package api wires handlers, middleware and routes into a Gin engine.
 package api
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/NathanGrs00/godo/internal/api/handlers"
-	_interface "github.com/NathanGrs00/godo/internal/repository/interface"
+	"github.com/NathanGrs00/godo/internal/api/middleware"
+	"github.com/NathanGrs00/godo/internal/models"
+	"github.com/NathanGrs00/godo/internal/service"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, taskRepo _interface.TaskRepository) {
-	userHandlers := handlers.NewUserHandler()
-	taskHandlers := handlers.NewTaskHandler(taskRepo)
-	deadlinesHandler := handlers.NewDeadlineHandler()
-	tagHandlers := handlers.NewTagHandler()
-	settingsHandler := handlers.NewSettingsHandler()
-	authHandlers := handlers.NewAuthHandler()
+// Deps is everything the router needs.
+type Deps struct {
+	Auth      *service.AuthService
+	Tasks     *service.TaskService
+	Deadlines *service.DeadlineService
+	Tags      *service.TagService
+	Tokens    middleware.TokenVerifier
+	Events    handlers.Subscriber
+	// AllowedOrigins are the frontend URLs allowed by CORS.
+	AllowedOrigins []string
+	// Heartbeat is how often the event stream sends a keep-alive (default 25s).
+	Heartbeat time.Duration
+}
 
-	r.GET("/", handlers.RootHandler)
-
-	auth := r.Group("/auth")
-	{
-		auth.POST("/login", authHandlers.Login)
-		auth.POST("/register", authHandlers.Register)
+// NewRouter builds the HTTP API.
+//
+//	GET    /health                 liveness check (public)
+//	POST   /auth/register          create account (public)
+//	POST   /auth/login             log in (public)
+//	GET    /auth/me                current user
+//	GET    /events                 live change stream (Server-Sent Events)
+//	CRUD   /tasks, /deadlines, /tags
+//
+// Every route except the public ones needs "Authorization: Bearer <token>".
+func NewRouter(deps Deps) *gin.Engine {
+	if deps.Heartbeat == 0 {
+		deps.Heartbeat = 25 * time.Second
 	}
 
-	users := r.Group("/users")
-	{
-		users.GET("/", userHandlers.GetAll)
-		users.GET("/:id", userHandlers.GetByID)
-		users.POST("/", userHandlers.Create)
-		users.PUT("/:id", userHandlers.Update)
-		users.DELETE("/:id", userHandlers.Delete)
-	}
+	r := gin.New()
+	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: deps.AllowedOrigins,
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+		MaxAge:       12 * time.Hour,
+	}))
 
-	tasks := r.Group("/tasks")
-	{
-		tasks.GET("/", taskHandlers.GetAll)
-		tasks.GET("/:id", taskHandlers.GetByID)
-		tasks.POST("/", taskHandlers.Create)
-		tasks.PUT("/:id", taskHandlers.Update)
-		tasks.DELETE("/:id", taskHandlers.Delete)
-	}
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	})
 
-	deadlines := r.Group("/deadlines")
-	{
-		deadlines.GET("/", deadlinesHandler.GetAll)
-		deadlines.GET("/:id", deadlinesHandler.GetByID)
-		deadlines.POST("/", deadlinesHandler.Create)
-		deadlines.PUT("/:id", deadlinesHandler.Update)
-		deadlines.DELETE("/:id", deadlinesHandler.Delete)
-		deadlines.GET("/dummies", deadlinesHandler.DummyDeadlines)
-	}
+	authHandler := handlers.NewAuthHandler(deps.Auth)
+	r.POST("/auth/register", authHandler.Register)
+	r.POST("/auth/login", authHandler.Login)
 
-	tags := r.Group("/tags")
-	{
-		tags.GET("/", tagHandlers.GetAll)
-		tags.GET("/:id", tagHandlers.GetByID)
-		tags.POST("/", tagHandlers.Create)
-		tags.PUT("/:id", tagHandlers.Update)
-		tags.DELETE("/:id", tagHandlers.Delete)
-		tags.GET("/dummies", tagHandlers.DummyTags)
-	}
+	// Everything below requires a logged-in user
+	private := r.Group("", middleware.RequireAuth(deps.Tokens))
+	private.GET("/auth/me", authHandler.Me)
+	private.GET("/events", handlers.NewEventsHandler(deps.Events, deps.Heartbeat).Stream)
 
-	//TODO: Settings need different handlers instead of CRUD operations.
-	settings := r.Group("/settings")
-	{
-		settings.GET("/", settingsHandler.GetAll)
-		settings.GET("/:id", settingsHandler.GetByID)
-		settings.POST("/", settingsHandler.Create)
-		settings.PUT("/:id", settingsHandler.Update)
-		settings.DELETE("/:id", settingsHandler.Delete)
-	}
+	handlers.NewResourceHandler[*models.Task, service.TaskInput](deps.Tasks, "task", "tasks").
+		Register(private.Group("/tasks"))
+	handlers.NewResourceHandler[*models.Deadline, service.DeadlineInput](deps.Deadlines, "deadline", "deadlines").
+		Register(private.Group("/deadlines"))
+	handlers.NewResourceHandler[*models.Tag, service.TagInput](deps.Tags, "tag", "tags").
+		Register(private.Group("/tags"))
+
+	return r
 }
